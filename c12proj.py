@@ -5,7 +5,7 @@ import pandas as pd
 import platform
 from mysql.connector import Error
 try:
-    db=mysql.connector.connect(host="localhost",user="Kirthi",password="Dojomojo@12",database="sneakeroo")
+    db=mysql.connector.connect(host="localhost",user="yourusername",password="yourpassword",database="sneakeroo")
 
     if db.is_connected():
         print("Connected to the server!")
