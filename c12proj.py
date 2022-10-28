@@ -1,4 +1,5 @@
 import mysql.connector
+from tabulate import tabulate
 import time
 from mysql.connector import Error
 import datetime
@@ -33,8 +34,8 @@ def EditProduct():
     e=(p_id,)
     mycur.execute(sql,e)
     re=mycur.fetchall()
-    for i in re:
-        print(i)
+    print(tabulate(re,tablefmt='grid'))
+
     print()
     f=input("Enter the field which you want to edit: ")
     val=input("Enter the value which you want to set: ")
@@ -47,8 +48,8 @@ def EditProduct():
     e=(p_id,)
     mycur.execute(sql,e)
     re=mycur.fetchall()
-    for i in re:
-        print(i)
+    print(tabulate(re,tablefmt='grid'))
+
     db.commit()
 
 def EditStock():
@@ -63,8 +64,8 @@ def EditStock():
     mycur.execute(sql_1,er)
     print("The Stock is updated")
     res=mycur.fetchall()
-    for x in res:
-        print(x)
+    print(tabulate(res,tablefmt='grid'))
+
 
 
 def DelProduct():
@@ -82,7 +83,7 @@ def DelProduct():
     sql="delete from product where product_id=%s"
     mycur.execute(sql,id)
     db.commit()
-    print("One Item Deleted")
+    print("\t\t\nOne Item Deleted")
 
 def ViewStock():
     item=input("Enter Product Name : ")
@@ -92,27 +93,14 @@ def ViewStock():
     itm=(item,)
     mycur.execute(sql,itm)
     res=mycur.fetchall()
-    for x in res:
-        print(x)
+    print(tabulate(res,tablefmt='grid'))
 
-def ViewSales():
-    item=input("Enter Product Name : ")
-    sql="select product.product_id, product.PName,product.bnd,\
-    purchase.Purchase_date,purchase.no_of_items, purchase.amount \
-    from purchase, product where product.product_id=purchase.item_id \
-    and product.PName=%s"
-    itm=(item,)
-    mycur.execute(sql,itm)
-    res=mycur.fetchall()
-    for x in res:
-        print(x)
 
 def ViewProduct():
     sql="select * from product"
     mycur.execute(sql)
     res=mycur.fetchall()
-    for x in res:
-        print(x)
+    print(tabulate(res,tablefmt='grid'))
 
 def PurchaseProduct():
     mn=""
@@ -204,8 +192,8 @@ def Customer():
             tp=(val,)
             mycur.execute(sq,tp)
             res=mycur.fetchall()
-            for x in res:
-                print(x)
+            print(tabulate(res,tablefmt='grid'))
+
         elif ask == "3":
             var='bnd'
             val=input("Enter the name of Brand : ")
@@ -214,8 +202,8 @@ def Customer():
             tp=(val,)
             mycur.execute(sq,tp)
             res=mycur.fetchall()
-            for x in res:
-                print(x)
+            print(tabulate(res,tablefmt='grid'))
+
         elif ask == "4":
             var='sex'
             val=input("Enter the Gender: ")
@@ -224,8 +212,8 @@ def Customer():
             tp=(val,)
             mycur.execute(sq,tp)
             res=mycur.fetchall()
-            for x in res:
-                print(x)
+            print(tabulate(res,tablefmt='grid'))
+
         elif ask == "5":
             PurchaseProduct()
         elif ask == "6":
@@ -251,7 +239,7 @@ def Admin():
                 time.sleep(3)
                 print("\nWelcome,",user)
                 while True:
-                    a=input("What would you like to do?:\n1.Add Product\n2.Edit Product\n3.Delete a Product\n4.View Stock\n5.View Sales\n6.Move to Customer Page\n7.Edit Stock\n8.View All Products\nChoose your option: ")
+                    a=input("What would you like to do?:\n1.Add Product\n2.Edit Product\n3.Delete a Product\n4.View Stock\n5.Move to Customer Page\n6.Edit Stock\n7.View All Products\n8.Exit out of Program\nChoose your option: ")
                     if a=="1":
                         Addproduct()
                     elif a=="2":
@@ -261,13 +249,14 @@ def Admin():
                     elif a=="4":
                         ViewStock()
                     elif a=="5":
-                        ViewSales()
-                    elif a=="6":
                         Customer()
-                    elif a=="7":
+                    elif a=="6":
                         EditStock()
-                    elif a=="8":
+                    elif a=="7":
                         ViewProduct()
+                    elif a=="8":
+                        exit()
+                        
 
             else:
                 print("\nInvalid Code")
